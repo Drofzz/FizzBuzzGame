@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -57,80 +56,5 @@ namespace FizzBuzzGame
         }
 
 
-    }
-
-    interface IFizzBuzzGame
-    {
-        IEnumerable<string> GetFizzBuzz();
-    }
-
-    class FizzBuzzStatic : IFizzBuzzGame
-    {
-        public IEnumerable<string> GetFizzBuzz()
-        {
-            for (var i = 1; i <= 100; i++)
-            {
-
-                var result = "";
-
-                var fizz = (i % 3 == 0);
-                var buzz = (i % 5 == 0);
-                var woof = (i % 7 == 0);
-
-                if (fizz || buzz || woof) result
-                    = (fizz ? "Fizz" : "")
-                      + (buzz ? "Buzz" : "")
-                      + (woof ? "Woof" : "");
-                else result = i.ToString();
-
-                yield return result;
-
-            }
-        }
-    }
-
-    class FizzBuzzDynamic : IFizzBuzzGame
-    {
-        private readonly IEnumerable<int> _sequence;
-        private readonly (int Number, string Word)[] _triggers;
-        public FizzBuzzDynamic(IEnumerable<int> sequence, (int,string)[] triggers)
-        {
-            _sequence = sequence;
-            _triggers = triggers;
-        }
-
-        public IEnumerable<string> GetFizzBuzz()
-        {
-            foreach (var i in _sequence)
-            {
-                var result = _triggers.Where(trigger => i % trigger.Number == 0).Aggregate("", (current, trigger) => current + trigger.Word);
-
-                if (string.IsNullOrEmpty(result)) result = i.ToString();
-                yield return result;
-            }
-        }
-    }
-
-    class FizzBuzzDynamicUsingDelegates : IFizzBuzzGame
-    {
-        private readonly IEnumerable<int> _sequence;
-        private readonly Func<int, string>[] _passes;
-
-        public FizzBuzzDynamicUsingDelegates(IEnumerable<int> sequence, params Func<int, string>[] passes)
-        {
-            _sequence = sequence;
-            _passes = passes;
-        }
-
-        public IEnumerable<string> GetFizzBuzz()
-        {
-            foreach (var i in _sequence)
-            {
-                var result = _passes.Aggregate("", (current, pass) => current + pass.Invoke(i));
-
-                if (string.IsNullOrEmpty(result)) result = i.ToString();
-                yield return result;
-            }
-        }
     }
 }
