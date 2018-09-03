@@ -31,6 +31,7 @@ namespace FizzBuzzGame
                 i => i % 3 == 0 ? "Fizz":"",
                 i => i % 5 == 0 ? "Buzz":"",
                 i => i % 7 == 0 ? "Woof":""
+                //Example of wierd tests:  i => i.ToString().Contains("7") ? "Woof":""
                 );
 
             PlayFizzBuzz(game1);
