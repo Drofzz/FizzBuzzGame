@@ -11,13 +11,15 @@ namespace FizzBuzzGame
 
         public static bool IsCorrect(string result, int number)
         {
+            if (!(number < Cheatsheet.Length)) return false; 
             var line = Cheatsheet.GetValue(number).ToString().Split(':');
             return string.Equals(result, line[1].Trim(), StringComparison.CurrentCultureIgnoreCase);
+                
         }
 
         static void Main(string[] args)
         {
-            var game1 = new FizzBuzzDynamic(Enumerable.Range(1, 100), new[]
+            var game1 = new FizzBuzzDynamic(Enumerable.Range(1, 1000), new[]
             {
                 (3, "Fizz"),
                 (5, "Buzz"),
