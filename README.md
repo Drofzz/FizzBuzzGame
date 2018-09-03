@@ -9,7 +9,14 @@ extra and if number is Dividable by 7, say Woof
 if nothing above is true then say the number
 
 
-This example have 2 Solutions.
+This example have 3 Solutions.
 
-Solution FizzBuzzStatic is a more non-flexible way to resolve this problem, as the parameters for this puzzle is kinda static, ther ewould be no need to make the algorithm dynamic, unless asked for.
-Solution FizzBuzzDynamic is a flexible way to add or change number or fizzbuzz words quickly, without having to refactor the code. this solution i kinda see as overkill, as much as it is an engineers wet dream to make code flexible, it is sometimes not needed.
+## Solution FizzBuzzStatic 
+is a more non-flexible way to resolve this problem, as the parameters for this puzzle is kinda static, ther ewould be no need to make the algorithm dynamic, unless asked for.
+
+## Solution FizzBuzzDynamic 
+is a flexible way to add or change number or fizzbuzz words quickly, without having to refactor the code. this solution i kinda see as overkill, as much as it is an engineers wet dream to make code flexible, it is sometimes not needed.
+
+## Solution FizzBuzzDynamicUsingDelegates
+This solution is compleetly overkill, and a way to be able to change the rules of the game, if it is suddenly not division that is asked for, but maybe something compleetly diffrent.
+for example if it needs to write additionally Woof, everytime there is a 7 present in the number.
