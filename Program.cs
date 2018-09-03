@@ -19,7 +19,7 @@ namespace FizzBuzzGame
 
         static void Main(string[] args)
         {
-            var game1 = new FizzBuzzDynamic(Enumerable.Range(1, 1000), new[]
+            var game1 = new FizzBuzzDynamic(Enumerable.Range(1, 100), new[]
             {
                 (3, "Fizz"),
                 (5, "Buzz"),
@@ -28,8 +28,15 @@ namespace FizzBuzzGame
 
             var game2 = new FizzBuzzStatic();
 
+            var game3 = new FizzBuzzDynamicUsingDelegates(Enumerable.Range(1,100),
+                i => i % 3 == 0 ? "Fizz":"",
+                i => i % 5 == 0 ? "Buzz":"",
+                i => i % 7 == 0 ? "Woof":""
+                );
+
             PlayFizzBuzz(game1);
             PlayFizzBuzz(game2);
+            PlayFizzBuzz(game3);
         }
 
         public static void PlayFizzBuzz(IFizzBuzzGame game)
@@ -97,6 +104,29 @@ namespace FizzBuzzGame
             foreach (var i in _sequence)
             {
                 var result = _triggers.Where(trigger => i % trigger.Number == 0).Aggregate("", (current, trigger) => current + trigger.Word);
+
+                if (string.IsNullOrEmpty(result)) result = i.ToString();
+                yield return result;
+            }
+        }
+    }
+
+    class FizzBuzzDynamicUsingDelegates : IFizzBuzzGame
+    {
+        private readonly IEnumerable<int> _sequence;
+        private readonly Func<int, string>[] _passes;
+
+        public FizzBuzzDynamicUsingDelegates(IEnumerable<int> sequence, params Func<int, string>[] passes)
+        {
+            _sequence = sequence;
+            _passes = passes;
+        }
+
+        public IEnumerable<string> GetFizzBuzz()
+        {
+            foreach (var i in _sequence)
+            {
+                var result = _passes.Aggregate("", (current, pass) => current + pass.Invoke(i));
 
                 if (string.IsNullOrEmpty(result)) result = i.ToString();
                 yield return result;
