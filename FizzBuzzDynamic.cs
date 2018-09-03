@@ -13,14 +13,14 @@ namespace FizzBuzzGame
             _triggers = triggers;
         }
 
-        public IEnumerable<string> GetFizzBuzz()
+        public IEnumerable<(int,string)> GetFizzBuzz()
         {
             foreach (var i in _sequence)
             {
                 var result = _triggers.Where(trigger => i % trigger.Number == 0).Aggregate("", (current, trigger) => current + trigger.Word);
 
                 if (string.IsNullOrEmpty(result)) result = i.ToString();
-                yield return result;
+                yield return (i,result);
             }
         }
     }

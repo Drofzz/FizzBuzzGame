@@ -4,6 +4,6 @@ namespace FizzBuzzGame
 {
     interface IFizzBuzzGame
     {
-        IEnumerable<string> GetFizzBuzz();
+        IEnumerable<(int,string)> GetFizzBuzz();
     }
 }

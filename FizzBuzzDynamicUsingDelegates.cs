@@ -15,14 +15,14 @@ namespace FizzBuzzGame
             _passes = passes;
         }
 
-        public IEnumerable<string> GetFizzBuzz()
+        public IEnumerable<(int,string)> GetFizzBuzz()
         {
             foreach (var i in _sequence)
             {
                 var result = _passes.Aggregate("", (current, pass) => current + pass.Invoke(i));
 
                 if (string.IsNullOrEmpty(result)) result = i.ToString();
-                yield return result;
+                yield return (i,result);
             }
         }
     }

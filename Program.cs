@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -6,13 +7,16 @@ namespace FizzBuzzGame
 {
     class Program
     {
-        private static readonly string[] Cheatsheet = File.ReadAllLines("prediction.txt");
-
-        public static bool IsCorrect(string result, int number)
+        private static readonly Dictionary<int, string> Cheatsheet = File.ReadAllLines("prediction.txt").Select(l =>
         {
-            if (!(number < Cheatsheet.Length)) return false; 
-            var line = Cheatsheet.GetValue(number).ToString().Split(':');
-            return string.Equals(result, line[1].Trim(), StringComparison.CurrentCultureIgnoreCase);
+            var data = l.Split(':');
+            return new KeyValuePair<int, string>(int.Parse(data[0]),data[1]);
+        }).ToDictionary(kv => kv.Key, kv => kv.Value.Trim());
+
+        public static bool IsCorrect((int Input,string Output) result)
+        {
+            if (!Cheatsheet.ContainsKey(result.Input)) return false;
+            return string.Equals(result.Output, Cheatsheet[result.Input], StringComparison.CurrentCultureIgnoreCase);
                 
         }
 
@@ -46,7 +50,7 @@ namespace FizzBuzzGame
 
             for (var i = 0; i < results.Count; i++)
             {
-                Print(results[i], IsCorrect(results[i], i) ? ConsoleColor.Green : ConsoleColor.Red);
+                Print(results[i].Item2, IsCorrect(results[i]) ? ConsoleColor.Green : ConsoleColor.Red);
             }
         }
 

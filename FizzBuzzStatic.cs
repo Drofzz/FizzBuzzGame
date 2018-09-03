@@ -4,7 +4,7 @@ namespace FizzBuzzGame
 {
     class FizzBuzzStatic : IFizzBuzzGame
     {
-        public IEnumerable<string> GetFizzBuzz()
+        public IEnumerable<(int,string)> GetFizzBuzz()
         {
             for (var i = 1; i <= 100; i++)
             {
@@ -21,7 +21,7 @@ namespace FizzBuzzGame
                       + (woof ? "Woof" : "");
                 else result = i.ToString();
 
-                yield return result;
+                yield return (i,result);
 
             }
         }
